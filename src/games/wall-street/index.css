@@ -90,11 +90,7 @@
 }
 
 .wall-street-game button.bg-green-600.cursor-pointer.text-gray-100.min-w-\[32px\].min-h-\[32px\].rounded-sm.flex.justify-center.items-center {
-    /* background: #2cab401f; */
     border-radius: 50px;
-    /* border-width: 0 5px 5px 5px; */
-    /* border-color: transparent transparent #2cab40 transparent; */
-
 }
 
 .wall-street-game button.bg-red-600.cursor-pointer.text-gray-100.min-w-\[32px\].min-h-\[32px\].rounded-sm.flex.justify-center.items-center {
@@ -134,7 +130,6 @@
 }
 
 .wall-street-game .bg-bull:hover {
-    /* background: linear-gradient(45deg, #ffffff4f, transparent); */
     background: #403B4A;
     background: -webkit-linear-gradient(to right, #E7E9BB, #403B4A);
     background: linear-gradient(to right, #E7E9BB, #403B4A);
@@ -155,7 +150,6 @@
 }
 
 .wall-street-game .bg-sell.active {
-    /* border: 1px solid #ff4b4b6b; */
     border: 1px solid #F00000;
     opacity: 1;
 }
@@ -199,7 +193,6 @@
 }
 
 .wall-street-game .bet-btn {
-    /* background: #2cab40; */
     background: #0f9b0f;
     border-bottom: 5px solid #00000047;
     font-size: 16px;
@@ -271,7 +264,6 @@
 .wall-street-game .only-stroke {
     color: #1a1f2f;
     -webkit-text-fill-color: #1a1f2f;
-    /* Will override color (regardless of order) */
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: white;
 }
