@@ -34,6 +34,10 @@ Deve ser feito uma refatoração da interface de usuário atual, para uma nova i
 
 ## 📸 Preview:
 
+### Tela antes da refatoração
+
+![tela_antes](https://github.com/iamlucasgomes/wallstreet-game/assets/102754721/830b511d-9da8-4d18-a0f1-0791750f1d43)
+
 #### Tela de início
 
 ![alt text](./public/readme/index.png)
