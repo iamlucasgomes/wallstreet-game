@@ -44,7 +44,7 @@ Deve ser feito uma refatoração da interface de usuário atual, para uma nova i
 
 #### Tela como jogar
 
-![alt text](./public/readme/como-jogar.png)
+![alt text](./public/readme/como_jogar.png)
 
 #### Tela com Auto
 
