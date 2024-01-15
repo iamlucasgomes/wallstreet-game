@@ -37,12 +37,10 @@ export default function Results() {
         <div className="flex items-center overflow-x-hidden gap-2 mr-10">
           {results.map((result, idx) => {
             const parsed: IWallStreetResult = JSON.parse(result)
-
             return (
               <Badge
                 key={idx}
                 {...parsed}
-                multipler={result.point}
                 showRoundInfo={showRoundInfo}
               />
             )
@@ -51,30 +49,32 @@ export default function Results() {
       </If>
 
       <If condition={expand}>
-        <div className="h-6"></div>
-        <div className="rounded last-odds-component w-full absolute -top-1">
-          <div className="flex items-center justify-between relative rounded-t px-2 h-10">
-            <h3 className="text-xs font-bold uppercase">
-              Histórico de Tendências
-            </h3>
-          </div>
+        <>
+          <div className="h-6"></div>
+          <div className="rounded last-odds-component w-full absolute -top-1">
+            <div className="flex items-center justify-between relative rounded-t px-2 h-10">
+              <h3 className="text-xs font-bold uppercase">
+                Histórico de Tendências
+              </h3>
+            </div>
 
-          <div className="flex flex-wrap shadow max-h-36 rounded-b p-2 gap-2 overflow-y-scroll scrollbar-w-0 scrollbar-track-gray-400 scrollbar-thumb-gray-700 scrollbar scrollbar-track-rounded scrollbar-thumb-rounded">
-            {results.map((result, idx) => {
-              const parsed: IWallStreetResult = JSON.parse(result)
+            <div className="flex flex-wrap shadow max-h-36 rounded-b p-2 gap-2 overflow-y-scroll scrollbar-w-0 scrollbar-track-gray-400 scrollbar-thumb-gray-700 scrollbar scrollbar-track-rounded scrollbar-thumb-rounded">
+              {results.map((result, idx) => {
+                const parsed: IWallStreetResult = JSON.parse(result)
 
-              return (
-                <Badge
-                  key={idx}
-                  {...parsed}
-                  multipler={result.point}
-                  showRoundInfo={showRoundInfo}
-                  // onClick={() => {soundClick()}}
-                />
-              )
-            })}
+                return (
+                  <button onClick={() => soundClick()}>
+                    <Badge
+                      key={idx}
+                      {...parsed}
+                      showRoundInfo={showRoundInfo}
+                    />
+                  </button>
+                )
+              })}
+            </div>
           </div>
-        </div>
+        </>
       </If>
 
       <button
@@ -89,13 +89,13 @@ export default function Results() {
           <XMarkIcon className="h-4 w-4 " />
         </If>
       </button>
-
-      <RoundInfoModal
-        show={showInfo}
-        data={roundInfo}
-        toggle={setShowInfo}
-        onClick={() => soundClick()}
-      />
+      <button onClick={() => soundClick()}>
+        <RoundInfoModal
+          show={showInfo}
+          data={roundInfo}
+          toggle={setShowInfo}
+        />
+      </button>
     </div>
   )
 }

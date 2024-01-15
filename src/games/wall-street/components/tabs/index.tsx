@@ -21,9 +21,7 @@ export default function Tabs({
   variant = 'slate',
 }: Props) {
   return (
-    <div
-      className={`tabs p-1 rounded flex w-full justify-center hidden`}
-    >
+    <div className={`tabs p-1 rounded flex w-full justify-center`}>
       {tabs.map((tab) => {
         return (
           <a

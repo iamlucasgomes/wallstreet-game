@@ -1,12 +1,13 @@
-import React,{ useContext} from 'react'
+import React, { useContext } from 'react'
 import { WallStreetResult } from './enums/wall-street-result.enum'
-import {
-  ArrowTrendingDownIcon,
-  ArrowTrendingUpIcon,
-  MinusIcon,
-} from '@heroicons/react/24/outline'
+import { MinusIcon } from '@heroicons/react/24/outline'
+import { FaArrowTrendDown, FaArrowTrendUp } from 'react-icons/fa6'
 import { WallStreetGameContext } from '@/core/providers/games/wall-street-game.provider'
-
+import { GameStatus } from '@/core/providers/enums/game-status'
+import { IGameMessage } from '@/core/providers/interfaces/game-message.interface'
+import { IWallStreetTransaction } from '@/core/providers/interfaces/transaction'
+import { ISession } from '@/core/providers/session.provider'
+import { IWallStreetGameContext } from '../../@types/WallStreetGameContext'
 
 type Props = {
   round_id: number
@@ -15,15 +16,15 @@ type Props = {
   showRoundInfo: Function
 }
 
-
 export default function MultiplierBadge({
   round_id,
   trending,
   grow,
   showRoundInfo,
 }: Props) {
-
-  const { soundClick } = useContext(WallStreetGameContext)
+  const { soundClick } = useContext(
+    WallStreetGameContext
+  ) as IWallStreetGameContext.WallStreetGameContextProps
 
   const handleClick = (e) => {
     soundClick()
@@ -37,7 +38,7 @@ export default function MultiplierBadge({
           onClick={() => handleClick(round_id)}
           className="bg-green-600 cursor-pointer text-gray-100 min-w-[32px] min-h-[32px] rounded-sm flex justify-center items-center"
         >
-          <ArrowTrendingUpIcon className="w-5 h-5" />
+          <FaArrowTrendUp className="w-5 h-5" />
         </button>
       )
 
@@ -47,7 +48,7 @@ export default function MultiplierBadge({
           onClick={() => handleClick(round_id)}
           className="bg-red-600 cursor-pointer text-gray-100 min-w-[32px] min-h-[32px] rounded-sm flex justify-center items-center"
         >
-          <ArrowTrendingDownIcon className="w-5 h-5" />
+          <FaArrowTrendDown className="w-5 h-5" />
         </button>
       )
 

@@ -9,8 +9,6 @@ type Props = {
   name: string
 }
 
-import If from '../conditions/if'
-
 import {
   QuestionMarkCircleIcon,
   Bars3Icon,
@@ -19,6 +17,7 @@ import {
 import { getGameLogo, getHowToPlay } from '@/core/helpers'
 import GameLimitsModal from '@/core/components/shared/modals/wall-street/game-limits'
 import { Chat } from '../chat'
+import { IWallStreetGameContext } from '../../@types/WallStreetGameContext'
 
 export default function Navbar({
   game,
@@ -38,11 +37,10 @@ export default function Navbar({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
 
-  const {soundEnabled, 
-        setSoundEnabled, 
-        soundClick, 
-        playerName
-      } = useContext(WallStreetGameContext)
+  const { soundEnabled, setSoundEnabled, soundClick, playerName } =
+    useContext(
+      WallStreetGameContext
+    ) as IWallStreetGameContext.WallStreetGameContextProps
 
   const handleSoundEnabled = (event) => {
     const { checked } = event.target
@@ -82,7 +80,7 @@ export default function Navbar({
   useEffect(() => {
     document.addEventListener('click', handleOutsideClick)
     setTimeout(() => {
-      if (window.AudioContext == false) {
+      if (!window.AudioContext) {
         setAudioContextAllowed(false)
       }
     }, 2000)
@@ -112,7 +110,7 @@ export default function Navbar({
               setShowModal(!showModal)
               soundClick()
             }}
-            className="btn btn-sm py-1 px-2 flex items-center text-gray-500 btn-warning gap-1 rounded-md capitalize text-sm font-normal"
+            className="btn btn-sm py-1 px-2 flex items-center text-white btn-secondary gap-1 rounded-md capitalize text-sm font-normal"
           >
             <QuestionMarkCircleIcon className="h-5 w-5" />
             <span className="hidden sm:inline">Como Jogar?</span>
@@ -144,8 +142,7 @@ export default function Navbar({
                     className="h-12 invert rounded-lg"
                   />
                   <div className="mt-1">
-                    <p className="font-bold text-xs text-white">
-                      {/* Nome do Jogador */}
+                    <p className="font-bold text-2xl text-white">
                       {playerName}
                     </p>
                     <p className="text-xs flex mt-1">
@@ -190,25 +187,29 @@ export default function Navbar({
                     </label>
                   </div>
                 </div>
-                {/*{<div className="px-2 text-xs item">
-                  <div className="form-control">
-                    <label className="label cursor-pointer">
-                      <span className="label-text text-xs opacity-90">Animação</span>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          onChange={handleAnimationEnabled}
-                          checked={animationEnabled}
-                          className="sr-only peer"
-                        />
-                      <div className="w-8 h-4 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-transparent rounded-full peer bg-black peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[0px] after:left-[0px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
-                    </label>
-                  </label>
-                </div>
-            </div>} }*/}
+                {
+                  // <div className="px-2 text-xs item">
+                  //   <div className="form-control">
+                  //     <label className="label cursor-pointer">
+                  //       <span className="label-text text-xs opacity-90">
+                  //         Animação
+                  //       </span>
+                  //       <label className="relative inline-flex items-center cursor-pointer">
+                  //         <input
+                  //           type="checkbox"
+                  //           onChange={handleAnimationEnabled}
+                  //           checked={animationEnabled}
+                  //           className="sr-only peer"
+                  //         />
+                  //         <div className="w-8 h-4 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-transparent rounded-full peer bg-black peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[0px] after:left-[0px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                  //       </label>
+                  //     </label>
+                  //   </div>
+                  // </div>
+                }
 
                 <div
-                  className="px-3 cursor-pointer py-3 text-sm hover:font-bold text-xs item"
+                  className="px-3 cursor-pointer py-3 hover:font-bold text-xs item"
                   onClick={() => {
                     setShowGameLimitsModal(!showGameLimitsModal)
                     soundClick()
@@ -220,8 +221,9 @@ export default function Navbar({
                 </div>
 
                 <a
-                  className="px-3 cursor-pointer py-3 text-sm hover:font-bold text-xs item"
-                  href=""
+                  className="px-3 cursor-pointer py-3  hover:font-bold text-xs item"
+                  href="https://hypetech.games/contato.html"
+                  target="_blank"
                 >
                   <label className="cursor-pointer text-white text-xs opacity-75">
                     Suporte ao jogador Hypetech
@@ -230,15 +232,17 @@ export default function Navbar({
               </div>
             )}
           </div>
-          { <button
-            className="btn btn-sm px-1 btn-ghost"
-            onClick={() => {
-              setShowChat(!showChat)
-              soundClick()
-            }}
-          >
-            <ChatBubbleLeftIcon className="w-6 h-6 bg-opacity-50" />
-          </button> }
+          {
+            <button
+              className="btn btn-sm px-1 btn-ghost"
+              onClick={() => {
+                setShowChat(!showChat)
+                soundClick()
+              }}
+            >
+              <ChatBubbleLeftIcon className="w-6 h-6 bg-opacity-50" />
+            </button>
+          }
         </div>
       </div>
 
@@ -249,13 +253,12 @@ export default function Navbar({
         toggle={setShowGameLimitsModal}
       />
 
-      { <Chat show={showChat} /> }
-     {/*  {audioContextAllowed && isMobileDevice && (
-
+      {<Chat show={showChat} />}
+      {/* {audioContextAllowed && isMobileDevice && (
         <div className="flex justify-center sm:px-9 text-red-500 font-bold text-sm sm:text-xl">
           Clique no jogo para ativar os sons
         </div>
-      )}  */}
+      )} */}
     </div>
   )
 }

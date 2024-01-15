@@ -1,11 +1,9 @@
-import {
-  ArrowTrendingDownIcon,
-  ArrowTrendingUpIcon,
-  MinusIcon,
-} from '@heroicons/react/24/outline'
-import React,{ useContext} from 'react'
+import { MinusIcon } from '@heroicons/react/24/outline'
+import { FaArrowTrendUp, FaArrowTrendDown } from 'react-icons/fa6'
+import React, { useContext } from 'react'
 import { Trending } from '../transaction-panel/enums/trending.enum'
 import { WallStreetGameContext } from '@/core/providers/games/wall-street-game.provider'
+import { IWallStreetGameContext } from '../../@types/WallStreetGameContext'
 
 type Props = {
   selected: string
@@ -13,14 +11,14 @@ type Props = {
   handleMousePosition: Function
 }
 
-
 export default function OptionChooser({
   selected,
   setSelected,
-  handleMousePosition
+  handleMousePosition,
 }: Props) {
-
-  const { soundClick } = useContext(WallStreetGameContext)
+  const { soundClick } = useContext(
+    WallStreetGameContext
+  ) as IWallStreetGameContext.WallStreetGameContextProps
 
   const handleClick = (event) => {
     soundClick()
@@ -43,7 +41,7 @@ export default function OptionChooser({
               : 'border-transparent hover:border-transparent'
           } flex-1 text-xl rounded-sm bg-buy flex flex-col px-0 py-2 text-gray-200`}
         >
-          <ArrowTrendingUpIcon className="w-7 h-7" /> 2x
+          <FaArrowTrendUp className="w-7 h-7" /> 2x
         </button>
 
         <button
@@ -69,7 +67,7 @@ export default function OptionChooser({
               : 'border-transparent hover:border-transparent'
           } flex-1 text-xl rounded-sm bg-sell flex flex-col px-0 py-2 text-gray-200`}
         >
-          <ArrowTrendingDownIcon className="w-5 h-5" /> 2x
+          <FaArrowTrendDown className="w-5 h-5" /> 2x
         </button>
       </div>
     </div>

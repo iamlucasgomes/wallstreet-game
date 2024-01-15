@@ -28,15 +28,13 @@ type Props = {
 export default function CrashForm({ position }: Props) {
   const formRef = useRef<any>(null)
 
-
-
   const {
     transactions,
     registerTransaction,
     executeAction,
     setTransactions,
     gameStatus,
-    soundClick
+    soundClick,
   } = useContext<any>(WallStreetGameContext)
 
   const transaction = transactions[position]
@@ -87,13 +85,13 @@ export default function CrashForm({ position }: Props) {
   }
 
   const doubleAmount = () => {
-    soundClick();
+    soundClick()
     const realAmount = transaction.amount
     updateAmount(formatBRLCurrency(realAmount * 2))
   }
 
   const divideAmount = () => {
-    soundClick();
+    soundClick()
     const realAmount = transaction.amount
     updateAmount(formatBRLCurrency(realAmount / 2))
   }
@@ -107,15 +105,14 @@ export default function CrashForm({ position }: Props) {
     executeAction('setLine', { color: direction })
   }
 
-    const [showCheck, setShowCheck] = useState(false);
+  const [showCheck, setShowCheck] = useState(false)
 
   const betPlacing = () => {
-    setShowCheck(true);
+    setShowCheck(true)
     setTimeout(() => {
-      setShowCheck(false);
-    }, 1000);
-  };
-
+      setShowCheck(false)
+    }, 1000)
+  }
 
   return (
     <div className="w-full  relative">
@@ -137,18 +134,18 @@ export default function CrashForm({ position }: Props) {
         </div>
         <section className="flex flex-col gap-3 justify-center">
           <div className="grid grid-cols-3 gap-2">
-            <div className="col-span-2">
+            <div className="col-span-3">
               <TextField
                 id="valueInput"
                 name="amount"
-                class="h-full"
                 value={transaction.amount}
                 setValue={updateAmount}
                 label="Valor"
+                disabled={transaction.autoStarted}
               />
             </div>
 
-            <div className="col-span-1">
+            <div className="col-span-3">
               <div className="grid w-full gap-2">
                 <button
                   onClick={divideAmount}
@@ -183,66 +180,89 @@ export default function CrashForm({ position }: Props) {
                 value={transaction.roundCount}
                 setValue={updateRoundCount}
                 label="Quantidade"
+                disabled={transaction.autoStarted}
               />
             </div>
           </If>
 
           <If condition={transaction.mode == 'auto'}>
-            <If
-              condition={
-                transaction.autoStarted == false &&
-                transaction.status != TransactionStatus.PENDING
-              }
-            >
-              <button
-                className={`btn bg-blue-700 hover:bg-blue-800 border-none font-bold min-h-8 max-h-10 rounded text-gray-200 text-xs`}
+            <>
+              <If
+                condition={
+                  transaction.autoStarted == false &&
+                  transaction.status != TransactionStatus.PENDING
+                }
               >
-                Iniciar Entrada Auto
-              </button>
-            </If>
+                <button
+                  className={`btn bg-blue-700 hover:bg-blue-800 border-none font-bold min-h-8 max-h-10 rounded text-gray-200 text-xs`}
+                >
+                  Iniciar Entrada Auto
+                </button>
+              </If>
 
-            <If condition={transaction.autoStarted === true}>
-              <button
-                type="button"
-                onClick={cancelFuterTransaction}
-                className={`btn bg-red-700 hover:bg-red-800 border-none font-bold min-h-8 max-h-10 rounded text-gray-200 text-xs`}
-              >
-                Finalizar Entrada Auto ({transaction.roundCount})
-              </button>
-            </If>
-          </If>
-          <If condition={transaction.mode == 'common'}>
-            <If
-              condition={
-                transaction == null ||
-                transaction.status != TransactionStatus.PENDING
-              }
-            >
-              <button
-                onClick={betPlacing}
-                className={`bet-btn min-h-[50px] md:min-h-[100px] font-bold min-h-8 max-h-10 rounded text-gray-200 text-xs`}
-              >
-                {showCheck ? <svg className="w-12 h-12 text-center mx-auto text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> : 'Realizar entrada'}
-              </button>
-            </If>
-
-            <If
-              condition={
-                gameStatus != GameStatus.IDLE &&
-                transaction.status == TransactionStatus.PENDING
-              }
-            >
-              <div className="flex flex-col min-w-6/12">
+              <If condition={transaction.autoStarted === true}>
                 <button
                   type="button"
-                  className={`cancel-btn min-h-[50px] md:min-h-[100px] font-bold min-h-8 max-h-10 rounded text-gray-200 text-xs`}
                   onClick={cancelFuterTransaction}
+                  className={`btn bg-red-700 hover:bg-red-800 border-none font-bold min-h-8 max-h-10 rounded text-gray-200 text-xs`}
                 >
-                  Cancelar <br /> entrada
+                  Finalizar Entrada Auto ({transaction.roundCount})
                 </button>
-              </div>
-            </If>
+              </If>
+            </>
+          </If>
+          <If condition={transaction.mode == 'common'}>
+            <>
+              <If
+                condition={
+                  transaction == null ||
+                  transaction.status != TransactionStatus.PENDING
+                }
+              >
+                <button
+                  onClick={betPlacing}
+                  className={`bet-btn min-h-[50px] md:min-h-[100px] font-bold max-h-10 rounded text-gray-200 text-xs`}
+                >
+                  {showCheck ? (
+                    <svg
+                      className="w-12 h-12 text-center mx-auto text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      {' '}
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>{' '}
+                    </svg>
+                  ) : (
+                    'Realizar entrada'
+                  )}
+                </button>
+              </If>
 
+              <If
+                condition={
+                  gameStatus != GameStatus.IDLE &&
+                  transaction.status == TransactionStatus.PENDING
+                }
+              >
+                <div className="flex flex-col min-w-6/12">
+                  <button
+                    type="button"
+                    className={`cancel-btn md:min-h-[100px] font-bold min-h-8 max-h-10 rounded text-gray-200 text-xs`}
+                    onClick={cancelFuterTransaction}
+                  >
+                    Cancelar <br /> entrada
+                  </button>
+                </div>
+              </If>
+            </>
           </If>
         </section>
       </form>

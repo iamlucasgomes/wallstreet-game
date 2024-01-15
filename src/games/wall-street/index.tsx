@@ -37,11 +37,17 @@ function HomePage() {
               game="wall-street"
               executeAction={executeAction}
               balance={balance}
+              name={''}
             />
           </div>
           <div className="w-full h-full flex soft-border-bottom lg:min-h-[70vh]">
-            <div className="w-full md:w-[75%] lg:w-[85%] 2xl:w-[90%] relative order-1">
+            <div className="w-full md:w-[75%] lg:w-[85%] 2xl:w-[90%] relative order-0 z-0">
               <div className="flex h-full flex-col">
+                <div className="order-1">
+                  <div className="p-3 order-1 sm:order-3 md:border-r border-slate-700">
+                    <Results />
+                  </div>
+                </div>
                 <div className="h-full min-h-[300px] order-3 sm:order-1 relative z-0">
                   <iframe
                     ref={iframeRef}
@@ -50,17 +56,15 @@ function HomePage() {
                   ></iframe>
                   <Display />
                 </div>
-
-                <div className="order-2"></div>
-
-                <div
-                  className="p-3 order-1 sm:order-3 md:border-r border-slate-700"
-                  style={{ zIndex: 1 }}
-                >
-                  <div className="my-1">
-                    <Footer />
+                <div className="order-2">
+                  <div
+                    className="p-3 order-1 sm:order-3 md:border-r border-slate-700"
+                    style={{ zIndex: 1 }}
+                  >
+                    <div className="my-1">
+                      <Footer />
+                    </div>
                   </div>
-                  <Results />
                 </div>
               </div>
 

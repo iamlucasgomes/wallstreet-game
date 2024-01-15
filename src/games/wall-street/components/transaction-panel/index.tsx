@@ -1,10 +1,6 @@
 import React, { useContext, useEffect } from 'react'
-import {
-  ArrowTrendingDownIcon,
-  ArrowTrendingUpIcon,
-  MinusIcon,
-  UserIcon,
-} from '@heroicons/react/24/outline'
+import { MinusIcon, UserIcon } from '@heroicons/react/24/outline'
+import { FaArrowTrendUp, FaArrowTrendDown } from 'react-icons/fa6'
 import { WallStreetGameContext } from '@/core/providers/games/wall-street-game.provider'
 import { Trending } from './enums/trending.enum'
 
@@ -39,10 +35,20 @@ function Tab({ trending }: Props) {
 
   return (
     <div className="h-auto border-r border-white border-opacity-10">
-
-      <div className="flex border-b border-slate-600 p-3 justify-between hidden">
+      <div className="flex border-b border-slate-600 p-3 justify-between">
         <div className="flex items-center font-medium">
-          <span className="text-sm mr-1 capitalize">Vitória</span>
+          <span className="text-sm mr-1 capitalize">
+            {(() => {
+              switch (trending) {
+                case Trending.UP:
+                  return 'Subir'
+                case Trending.DOWN:
+                  return 'Descer'
+                default:
+                  return 'Manter'
+              }
+            })()}
+          </span>
           <span className="text-sm capitalize">
             {trending === Trending.IDLE ? '20x' : '2x'}
           </span>
@@ -61,7 +67,6 @@ function Tab({ trending }: Props) {
       </div>
 
       <div className="h-full flex-shrink-1 flex-grow basis-0  px-3 overflow-y-scroll scrollbar-w-0 min-h-[300px] max-h-[300px] scrollbar-track-gray-400 scrollbar-thumb-gray-700 scrollbar scrollbar-track-rounded scrollbar-thumb-rounded">
-
         <div className="flex flex-col ">
           {list.map((item, index) => {
             if (item)
@@ -87,25 +92,34 @@ function Tab({ trending }: Props) {
   )
 }
 
-const getRound = (trending) => {
+const getRound = (trending: Trending) => {
   switch (trending) {
     case Trending.UP:
       return (
-        <div className="bg-green-600 pointer-events-none text-gray-100 min-w-[32px] min-h-[32px] rounded-sm flex justify-center items-center">
-          <ArrowTrendingUpIcon className="w-5 h-5" />
+        <div
+          className="pointer-events-none text-gray-100 min-w-[32px] min-h-[32px] rounded-sm flex justify-center items-center"
+          style={{ background: 'rgb(5,122,85)' }}
+        >
+          <FaArrowTrendUp className="w-5 h-5" />
         </div>
       )
 
     case Trending.DOWN:
       return (
-        <div className="bg-red-600 pointer-events-none text-gray-100 min-w-[32px] min-h-[32px] rounded-sm flex justify-center items-center">
-          <ArrowTrendingDownIcon className="w-5 h-5" />
+        <div
+          className=" pointer-events-none text-gray-100 min-w-[32px] min-h-[32px] rounded-sm flex justify-center items-center"
+          style={{ background: 'rgb(224,36,36)' }}
+        >
+          <FaArrowTrendDown className="w-5 h-5" />
         </div>
       )
 
     case Trending.IDLE:
       return (
-        <div className="bg-yellow-400 pointer-events-none min-w-[32px] min-h-[32px] rounded-sm flex justify-center items-center">
+        <div
+          className="pointer-events-none min-w-[32px] min-h-[32px] rounded-sm flex justify-center items-center"
+          style={{ background: 'rgb(72,85,99)' }}
+        >
           <MinusIcon className="w-5 h-5" />
         </div>
       )
